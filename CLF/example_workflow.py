@@ -13,6 +13,7 @@ from nipype.interfaces.utility import Function, IdentityInterface
 from nipype.interfaces.io import SelectFiles, DataSink
 from nipype.pipeline.engine import Workflow, Node, MapNode
 from nipype.interfaces.dcm2nii import Dcm2niix
+from nipype.interfaces import fsl
 # ======================================================================
 # DEFINE NODE: INFOSOURCE
 # ======================================================================
@@ -38,6 +39,11 @@ selectfiles = Node(SelectFiles(templates), name='selectfiles')
 # ======================================================================
 # function: put dcm2niix into a node:
 dcm2niix = Node(Dcm2niix(), name='dcm2niix')
+# ======================================================================
+# DEFINE SKULLSTRIP NODE
+# ======================================================================
+# function: skullstrip the raw anatomical T1w image
+skullstrip = Node(fsl.BET(), name='skullstrip')
 # ======================================================================
 # CREATE DATASINK NODE (OUTPUT STREAM):
 # ======================================================================
@@ -66,6 +72,8 @@ clf_pipeline.connect(infosource, 'subject_id', selectfiles, 'subject_id')
 clf_pipeline.connect(selectfiles, 'dicom', dcm2niix, 'source_names')
 clf_pipeline.connect(dcm2niix, 'converted_files', datasink, 'dcm2niix.@converted_files')
 clf_pipeline.connect(dcm2niix, 'bids', datasink, 'dcm2niix.@bids')
+clf_pipeline.connect(dcm2niix, 'converted_files', skullstrip, 'in_file')
+clf_pipeline.connect(skullstrip, 'out_file', datasink, 'skullstrip.@out_file')
 # ======================================================================
 # WRITE GRAPH AND EXECUTE THE WORKFLOW
 # ======================================================================

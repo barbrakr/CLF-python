@@ -18,7 +18,11 @@ Overview of DCT_compile.m script: steps in the pipeline
     c. extension file binary (P>C)
     d. junction (P<C)
     e. extension (P<C)
-    e. summary (JL,EL)
-    f. summary (JL, ES) - HS gliosis
+    f. summary (JL,EL)
+    g. summary (JL, ES) - HS gliosis
+    h. summary total (JL,JS,EL,ES all overlaid on T1w)
     
     **NOTE: diagnosis notes: in one case, FCD detected when blurring (junction) is larger, and extension (cortical extension) is greater. in alternative diagnosis (hippocampal scarring), the GM gets smaller, but blurring region increases
+
+12. for each finding, remove duplicate (summary) file in case summary and non-summary are the same
+13. move newly-created dicom files to subject's results directory (tell clinician results are ready, and where to find them)

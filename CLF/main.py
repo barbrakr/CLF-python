@@ -12,7 +12,10 @@ def main():
     converter.inputs.output_dir = dicom_directory
     converter.cmdline
     converter.run() 
- 
+
+    from myfunctions import prompt_demographics
+    age, sex = prompt_demographics()
+
     #class dicom2nifti.convert_dicom.Vendor
     #GE = input("Please state vendor - '2' for GE")
     #dicom_list = dicom2nifti.common.read_dicom_directory(dicom_directory)

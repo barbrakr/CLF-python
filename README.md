@@ -3,7 +3,7 @@ Cortical Lesion Finder in Python (work in progress, not a medical tool)
 
 Overview of DCT_compile.m script: steps in the pipeline
 1. load dicoms, and convert dicoms to nifti
-2. set origin along ac-pc in T1w
+2. set origin along ac-pc in T1w (probably not necessary to do this explicitly/manually in FSL)
 3. segmentation (incl. conversion to MNI) with cat12-equivalent
 4. coregistration, deformation
 5. calculate TIV

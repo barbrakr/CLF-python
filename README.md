@@ -2,7 +2,7 @@
 Cortical Lesion Finder in Python (work in progress, not a medical tool)
 
 *TEAM*:
-Samuel, Frank, Roopa, Carsten, Tom, Devin, Lennart
+Samuel, Frank, Roopa, Carsten, Tom, Devin, Lennart, Barbara
 
 *REFERENCE*:
 

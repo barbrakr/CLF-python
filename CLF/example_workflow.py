@@ -23,9 +23,11 @@ from nipype.interfaces import fsl
 # Read directory of dicom files into a single 3D nifti file.
 dicom_directory = input("Please enter folder.")
 
-from myfunctions import prompt_demographics, my_dcm2niix
+#bk#from myfunctions import prompt_demographics, my_dcm2niix
+from myfunctions import prompt_demographics
+
 age, sex = prompt_demographics()
-my_dcm2niix(dicom_directory)
+#bk#my_dcm2niix(dicom_directory)
 #bk#end
 
 # ======================================================================
@@ -33,7 +35,7 @@ my_dcm2niix(dicom_directory)
 # ======================================================================
 # define list with subject ids:
 #sub_list = list(range(136))
-sub_list = ['sub-01']
+sub_list = [''] #bk# ['sub-01']
 # define the infosource node that collects the data:
 infosource = Node(IdentityInterface(
     fields=['subject_id']), name='infosource')
@@ -44,7 +46,8 @@ infosource.iterables = [('subject_id', sub_list)]
 # ======================================================================
 path_root = dicom_directory #os.path.dirname(os.getcwd())
 
-templates = dict(dicom=opj(path_root, 'data', '{subject_id}'))
+templates = dict(dicom=opj(path_root, '', '{subject_id}'))
+#bk#templates = dict(dicom=opj(path_root, 'data', '{subject_id}'))
 # define the selectfiles node:
 selectfiles = Node(SelectFiles(templates), name='selectfiles')
 # ======================================================================
@@ -52,6 +55,7 @@ selectfiles = Node(SelectFiles(templates), name='selectfiles')
 # ======================================================================
 # function: put dcm2niix into a node:
 dcm2niix = Node(Dcm2niix(), name='dcm2niix')
+dcm2niix.inputs.out_filename ='%i_%4s_%d'
 # ======================================================================
 # DEFINE FREESURFER NODE
 # ======================================================================

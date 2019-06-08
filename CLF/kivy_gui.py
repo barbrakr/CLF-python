@@ -10,10 +10,15 @@ class RootWidget(GridLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.cols = 2
+        
+        self.cols = 3
 
+        self.add_widget(Label(text='Enter directory to DICOM files:'))
         self.add_widget(Label(text='Enter Sex (m/f)'))
         self.add_widget(Label(text='Enter Age (18-60)'))
+
+        self.dicomdir_text = TextInput(text='DICOM directory', multiline=False)
+        self.add_widget(self.dicomdir_text)
 
         self.sex_text = TextInput(text='sex', multiline=False)
         # self.sex_text.bind(text=self.update_sex)

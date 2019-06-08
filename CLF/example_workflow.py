@@ -15,6 +15,19 @@ from nipype.pipeline.engine import Workflow, Node, MapNode
 from nipype.interfaces.dcm2nii import Dcm2niix
 from nipype.workflows.smri.freesurfer.autorecon1 import create_AutoRecon1
 from nipype.interfaces import fsl
+
+#bk# ======================================================================
+# DEFINE INPUT: User
+# ======================================================================
+
+# Read directory of dicom files into a single 3D nifti file.
+dicom_directory = input("Please enter folder.")
+
+from myfunctions import prompt_demographics, my_dcm2niix
+age, sex = prompt_demographics()
+my_dcm2niix(dicom_directory)
+#bk#end
+
 # ======================================================================
 # DEFINE NODE: INFOSOURCE
 # ======================================================================
@@ -29,7 +42,7 @@ infosource.iterables = [('subject_id', sub_list)]
 # ======================================================================
 # DEFINE SELECTFILES NODE
 # ======================================================================
-path_root = os.path.dirname(os.getcwd())
+path_root = dicom_directory #os.path.dirname(os.getcwd())
 
 templates = dict(dicom=opj(path_root, 'data', '{subject_id}'))
 # define the selectfiles node:
@@ -48,7 +61,7 @@ dcm2niix = Node(Dcm2niix(), name='dcm2niix')
 # 3. Talairach transform computation
 # 4. Intensity Normalization 1
 # 5. Skull Strip
-fs_recon1 = create_AutoRecon1()
+#bk#fs_recon1 = create_AutoRecon1()
 #fs_recon1.inputs.inputspec.subject_id = 'subj1'
 #fs_recon1.inputs.inputspec.subjects_dir = '.'
 #fs_recon1.inputs.inputspec.T1_files = 'T1.nii.gz'
@@ -81,12 +94,12 @@ clf_pipeline.connect(infosource, 'subject_id', selectfiles, 'subject_id')
 clf_pipeline.connect(selectfiles, 'dicom', dcm2niix, 'source_dir')
 clf_pipeline.connect(dcm2niix, 'converted_files', datasink, 'dcm2niix.@converted_files')
 clf_pipeline.connect(dcm2niix, 'bids', datasink, 'dcm2niix.@bids')
-clf_pipeline.connect(dcm2niix, 'converted_files', fs_recon1, 'inputspec.T1_files')
-clf_pipeline.connect(fs_recon1, 'out_file', datasink, 'fs_recon1.@out_file')
+#bk#clf_pipeline.connect(dcm2niix, 'converted_files', fs_recon1, 'inputspec.T1_files')
+#bk#clf_pipeline.connect(fs_recon1, 'out_file', datasink, 'fs_recon1.@out_file')
 # ======================================================================
 # WRITE GRAPH AND EXECUTE THE WORKFLOW
 # ======================================================================
 # write the graph:
-clf_pipeline.write_graph(graph2use='colored', simple_form=True)
+#bk#clf_pipeline.write_graph(graph2use='colored', simple_form=True)
 # will execute the workflow using all available cpus:
 clf_pipeline.run(plugin='MultiProc')

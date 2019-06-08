@@ -21,8 +21,8 @@ from nipype.interfaces import fsl
 # ======================================================================
 
 # Read directory of dicom files into a single 3D nifti file.
-dicom_directory = input("Please enter folder.")
-
+dicom_directory = input("Please enter the path to your dicom images folder: ")
+print('Your folder is ' + str(dicom_directory))
 #bk#from myfunctions import prompt_demographics, my_dcm2niix
 from myfunctions import prompt_demographics
 

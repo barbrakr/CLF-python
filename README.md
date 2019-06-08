@@ -1,6 +1,9 @@
 # CLF-python
 Cortical Lesion Finder in Python (work in progress, not a medical tool)
 
+*TEAM*:
+Samuel, Frank, Roopa, Carsten, Tom, Devin, Lennart
+
 *REFERENCE*:
 
 Kreilkamp, B.A.K., Das, K., Wieshmann, U.C., Tyler, K., Kiel, S., Gould, S., Marson, A.G., Keller, S.S. (2017) Voxel-based MRI Analysis Can Assist Clinical Diagnostics in Patients with MRI-negative Epilepsy. Organization of Human Brain Mapping, Vancouver, Canada, June 2017 (abstract).

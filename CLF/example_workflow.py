@@ -13,14 +13,14 @@ from nipype.interfaces.utility import Function, IdentityInterface
 from nipype.interfaces.io import SelectFiles, DataSink
 from nipype.pipeline.engine import Workflow, Node, MapNode
 from nipype.interfaces.dcm2nii import Dcm2niix
+from nipype.workflows.smri.freesurfer.autorecon1 import create_AutoRecon1
 from nipype.interfaces import fsl
 # ======================================================================
 # DEFINE NODE: INFOSOURCE
 # ======================================================================
 # define list with subject ids:
 #sub_list = list(range(136))
-sub_list = list(range(1))
-sub_list = ['I' + str(i) for i in sub_list]
+sub_list = ['sub-01']
 # define the infosource node that collects the data:
 infosource = Node(IdentityInterface(
     fields=['subject_id']), name='infosource')
@@ -48,7 +48,6 @@ dcm2niix = Node(Dcm2niix(), name='dcm2niix')
 # 3. Talairach transform computation
 # 4. Intensity Normalization 1
 # 5. Skull Strip
-from nipype.workflows.smri.freesurfer.autorecon1 import create_AutoRecon1
 fs_recon1 = create_AutoRecon1()
 #fs_recon1.inputs.inputspec.subject_id = 'subj1'
 #fs_recon1.inputs.inputspec.subjects_dir = '.'
@@ -79,7 +78,7 @@ clf_pipeline.config = {'execution': {'stop_on_first_crash': True,
 clf_pipeline.base_dir = os.path.join(path_root, 'work')
 # connect the 1st-level analysis components
 clf_pipeline.connect(infosource, 'subject_id', selectfiles, 'subject_id')
-clf_pipeline.connect(selectfiles, 'dicom', dcm2niix, 'source_names')
+clf_pipeline.connect(selectfiles, 'dicom', dcm2niix, 'source_dir')
 clf_pipeline.connect(dcm2niix, 'converted_files', datasink, 'dcm2niix.@converted_files')
 clf_pipeline.connect(dcm2niix, 'bids', datasink, 'dcm2niix.@bids')
 clf_pipeline.connect(dcm2niix, 'converted_files', fs_recon1, 'inputspec.T1_files')

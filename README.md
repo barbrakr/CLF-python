@@ -9,14 +9,14 @@ Samuel, Frank, Roopa, Carsten, Tom, Devin, Lennart, Barbara
 *OVERVIEW* of DCT_compile.m script (steps in the pipeline)
 1. load dicoms, and convert dicoms to nifti
 2. set origin along ac-pc in T1w (probably not necessary to do this explicitly/manually in FSL)
-3. segmentation (incl. conversion to MNI) with cat12-equivalent
-4. coregistration, deformation
+3. coregistration, deformation (incl. registration to MNI-template) 
+4. segmentation with cat12-equivalent
 5. calculate TIV
-6. calculate junction area ("blurring", voxels with intensity between WM and GM) and cortical extension area (thresholded above 0.5 - gives GM voxels) images
-7. remove subcortical GM
-8. remove cerebellum (using AAL template)
-9. smooth junction file
-10. ttestJCT, ttestEXT (between patient and their age/sex matched control)
+6. remove subcortical GM (using AAL template)
+7. remove cerebellum (using AAL template)
+8. calculate junction area ("blurring", voxels with intensity between WM and GM) and cortical extension area (thresholded above 0.5 - gives GM voxels) images
+9. smooth junction and extension file
+10. ttestJCT, ttestEXT (between patient and controls, confounds: age, sex, TIV)
 11. create dicoms: (T1 proc., JL,EL, JS, ES)
     a. cleaned-up T1w (normalized, standard space)
     b. junction file binary, overlaid on T1w (P>C)

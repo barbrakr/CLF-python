@@ -4,10 +4,6 @@ Cortical Lesion Finder in Python (work in progress, not a medical tool)
 *TEAM*:
 Samuel, Frank, Roopa, Carsten, Tom, Devin, Lennart, Barbara
 
-*REFERENCE*:
-
-Kreilkamp, B.A.K., Das, K., Wieshmann, U.C., Tyler, K., Kiel, S., Gould, S., Marson, A.G., Keller, S.S. (2017) Voxel-based MRI Analysis Can Assist Clinical Diagnostics in Patients with MRI-negative Epilepsy. Organization of Human Brain Mapping, Vancouver, Canada, June 2017 (abstract).
-
  
 
 *OVERVIEW* of DCT_compile.m script (steps in the pipeline)
@@ -35,3 +31,8 @@ Kreilkamp, B.A.K., Das, K., Wieshmann, U.C., Tyler, K., Kiel, S., Gould, S., Mar
 
 12. for each finding, remove duplicate (summary) file in case summary and non-summary are the same
 13. move newly-created dicom files to subject's results directory (tell clinician results are ready, and where to find them)
+
+
+*REFERENCE*:
+
+Kreilkamp, B.A.K., Das, K., Wieshmann, U.C., Tyler, K., Kiel, S., Gould, S., Marson, A.G., Keller, S.S. (2017) Voxel-based MRI Analysis Can Assist Clinical Diagnostics in Patients with MRI-negative Epilepsy. Organization of Human Brain Mapping, Vancouver, Canada, June 2017 (abstract).

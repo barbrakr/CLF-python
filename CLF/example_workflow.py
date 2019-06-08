@@ -40,10 +40,20 @@ selectfiles = Node(SelectFiles(templates), name='selectfiles')
 # function: put dcm2niix into a node:
 dcm2niix = Node(Dcm2niix(), name='dcm2niix')
 # ======================================================================
-# DEFINE SKULLSTRIP NODE
+# DEFINE FREESURFER NODE
 # ======================================================================
-# function: skullstrip the raw anatomical T1w image
-skullstrip = Node(fsl.BET(), name='skullstrip')
+# function: autorecon1
+# 1. Motion Correction and Conform
+# 2. NU (Non-Uniform intensity normalization)
+# 3. Talairach transform computation
+# 4. Intensity Normalization 1
+# 5. Skull Strip
+from nipype.workflows.smri.freesurfer.autorecon1 import create_AutoRecon1
+fs_recon1 = create_AutoRecon1()
+#fs_recon1.inputs.inputspec.subject_id = 'subj1'
+#fs_recon1.inputs.inputspec.subjects_dir = '.'
+#fs_recon1.inputs.inputspec.T1_files = 'T1.nii.gz'
+#fs_recon1.run()
 # ======================================================================
 # CREATE DATASINK NODE (OUTPUT STREAM):
 # ======================================================================
@@ -72,8 +82,8 @@ clf_pipeline.connect(infosource, 'subject_id', selectfiles, 'subject_id')
 clf_pipeline.connect(selectfiles, 'dicom', dcm2niix, 'source_names')
 clf_pipeline.connect(dcm2niix, 'converted_files', datasink, 'dcm2niix.@converted_files')
 clf_pipeline.connect(dcm2niix, 'bids', datasink, 'dcm2niix.@bids')
-clf_pipeline.connect(dcm2niix, 'converted_files', skullstrip, 'in_file')
-clf_pipeline.connect(skullstrip, 'out_file', datasink, 'skullstrip.@out_file')
+clf_pipeline.connect(dcm2niix, 'converted_files', fs_recon1, 'inputspec.T1_files')
+clf_pipeline.connect(fs_recon1, 'out_file', datasink, 'fs_recon1.@out_file')
 # ======================================================================
 # WRITE GRAPH AND EXECUTE THE WORKFLOW
 # ======================================================================

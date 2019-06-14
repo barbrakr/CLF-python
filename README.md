@@ -17,7 +17,7 @@ Frank Sierra: @franklenin
 
 Tom Chambers
 
-*PROJECT LEAD AND CONTACT FOR CORRESPONDANCE*:
+*PROJECT LEAD AND CONTACT FOR CORRESPONDENCE*:
 
 Barbara Kreilkamp: @barbrakr
 

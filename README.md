@@ -2,7 +2,25 @@
 Cortical Lesion Finder in Python (work in progress, not a medical tool)
 
 *TEAM*:
-Samuel, Frank, Roopa, Carsten, Tom, Devin, Lennart, Barbara
+
+Samuel Berry: @el-suri
+
+Roopa Pai: @roopa-pai
+
+Carsten Schmidt-Samoa: @carsten.schmidt-samoa
+
+Devin Crowley: @devincrowley
+
+Lennart Wittkuhn: @lnnrtwttkhn
+
+Frank Sierra: @franklenin
+
+Tom Chambers
+
+*PROJECT LEAD AND CONTACT FOR CORRESPONDANCE*:
+
+Barbara Kreilkamp: @barbrakr
+
 
 *SUMMARY*:
 This tool works on structural MRI (T1-weighted MPRAGE or FSPGR) and is designed to identify malformations of cortical development such as focal cortical dysplasia, gliosis or hippocampal sclerosis.

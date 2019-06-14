@@ -15,8 +15,9 @@ from nipype.pipeline.engine import Workflow, Node, MapNode
 from nipype.interfaces.dcm2nii import Dcm2niix
 from nipype.workflows.smri.freesurfer.autorecon1 import create_AutoRecon1
 from nipype.interfaces import fsl
+from nipype.interfaces.fsl.maths import MultiImageMaths
 
-#bk# ======================================================================
+# ======================================================================
 # DEFINE INPUT: User
 # ======================================================================
 
@@ -27,14 +28,11 @@ dicom_directory = input("Please enter folder.")
 from myfunctions import prompt_demographics
 
 age, sex = prompt_demographics()
-#bk#my_dcm2niix(dicom_directory)
-#bk#end
 
 # ======================================================================
 # DEFINE NODE: INFOSOURCE
 # ======================================================================
 # define list with subject ids:
-#sub_list = list(range(136))
 sub_list = [''] #bk# ['sub-01']
 # define the infosource node that collects the data:
 infosource = Node(IdentityInterface(
@@ -47,7 +45,6 @@ infosource.iterables = [('subject_id', sub_list)]
 path_root = dicom_directory #os.path.dirname(os.getcwd())
 
 templates = dict(dicom=opj(path_root, '', '{subject_id}'))
-#bk#templates = dict(dicom=opj(path_root, 'data', '{subject_id}'))
 # define the selectfiles node:
 selectfiles = Node(SelectFiles(templates), name='selectfiles')
 # ======================================================================
@@ -55,7 +52,20 @@ selectfiles = Node(SelectFiles(templates), name='selectfiles')
 # ======================================================================
 # function: put dcm2niix into a node:
 dcm2niix = Node(Dcm2niix(), name='dcm2niix')
-dcm2niix.inputs.out_filename ='%i_%4s_%d'
+dcm2niix.inputs.out_filename = '%i_%4s_%d'
+print(dcm2niix.inputs.out_filename)
+#
+# DEFINE FSLMATHS NODE
+#
+#fslmaths = Node(MultiImageMaths(), name='fslmaths')
+fslmaths = Node(interface=fsl.MultiImageMaths(),
+                          name='fslmaths', iterfield=['in_file', 'op_string'])
+fslmaths.inputs.in_file = "aal_realinterest.nii"
+fslmaths.inputs.op_string = "-bin -mul %s"
+#fslmaths.inputs.operand_files = dcm2niix.inputs.out_filename #'%i_%4s_%d'
+fslmaths.inputs.out_file = "nobg_nocerebellum"
+
+
 # ======================================================================
 # DEFINE FREESURFER NODE
 # ======================================================================
@@ -98,6 +108,7 @@ clf_pipeline.connect(infosource, 'subject_id', selectfiles, 'subject_id')
 clf_pipeline.connect(selectfiles, 'dicom', dcm2niix, 'source_dir')
 clf_pipeline.connect(dcm2niix, 'converted_files', datasink, 'dcm2niix.@converted_files')
 clf_pipeline.connect(dcm2niix, 'bids', datasink, 'dcm2niix.@bids')
+clf_pipeline.connect(fslmaths, 'out_file', datasink, 'dcm2niix.@out_files')
 #bk#clf_pipeline.connect(dcm2niix, 'converted_files', fs_recon1, 'inputspec.T1_files')
 #bk#clf_pipeline.connect(fs_recon1, 'out_file', datasink, 'fs_recon1.@out_file')
 # ======================================================================
@@ -106,4 +117,5 @@ clf_pipeline.connect(dcm2niix, 'bids', datasink, 'dcm2niix.@bids')
 # write the graph:
 #bk#clf_pipeline.write_graph(graph2use='colored', simple_form=True)
 # will execute the workflow using all available cpus:
+MultiImageMaths.help()
 clf_pipeline.run(plugin='MultiProc')

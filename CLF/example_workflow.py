@@ -43,8 +43,10 @@ infosource.iterables = [('subject_id', sub_list)]
 # DEFINE SELECTFILES NODE
 # ======================================================================
 path_root = dicom_directory #os.path.dirname(os.getcwd())
+path_app = os.path.dirname(os.getcwd())
 
 templates = dict(dicom=opj(path_root, '', '{subject_id}'))
+test = opj(path_app,'CLF-python')
 # define the selectfiles node:
 selectfiles = Node(SelectFiles(templates), name='selectfiles')
 # ======================================================================
@@ -54,16 +56,15 @@ selectfiles = Node(SelectFiles(templates), name='selectfiles')
 dcm2niix = Node(Dcm2niix(), name='dcm2niix')
 dcm2niix.inputs.out_filename = '%i_%4s_%d'
 print(dcm2niix.inputs.out_filename)
-#
+# ======================================================================
 # DEFINE FSLMATHS NODE
-#
-#fslmaths = Node(MultiImageMaths(), name='fslmaths')
+# ======================================================================
 fslmaths = Node(interface=fsl.MultiImageMaths(),
                           name='fslmaths', iterfield=['in_file', 'op_string'])
-fslmaths.inputs.in_file = "aal_realinterest.nii"
-fslmaths.inputs.op_string = "-bin -mul %s"
-#fslmaths.inputs.operand_files = dcm2niix.inputs.out_filename #'%i_%4s_%d'
-fslmaths.inputs.out_file = "nobg_nocerebellum"
+fslmaths.inputs.in_file = opj(test,'aal_realinterest.nii')
+fslmaths.inputs.op_string = "-bin -add %s" #should eventually be "-bin -mul %s"
+fslmaths.inputs.operand_files = opj(test,'aal_realinterest.nii') #should eventually be: dcm2niix.inputs.out_filename #'%i_%4s_%d'
+fslmaths.inputs.out_file = "nobg_nocerebellum.nii.gz"
 
 
 # ======================================================================
@@ -108,14 +109,13 @@ clf_pipeline.connect(infosource, 'subject_id', selectfiles, 'subject_id')
 clf_pipeline.connect(selectfiles, 'dicom', dcm2niix, 'source_dir')
 clf_pipeline.connect(dcm2niix, 'converted_files', datasink, 'dcm2niix.@converted_files')
 clf_pipeline.connect(dcm2niix, 'bids', datasink, 'dcm2niix.@bids')
-clf_pipeline.connect(fslmaths, 'out_file', datasink, 'dcm2niix.@out_files')
+clf_pipeline.connect(fslmaths, 'out_file', datasink, 'fslmaths.@out_files')
 #bk#clf_pipeline.connect(dcm2niix, 'converted_files', fs_recon1, 'inputspec.T1_files')
 #bk#clf_pipeline.connect(fs_recon1, 'out_file', datasink, 'fs_recon1.@out_file')
 # ======================================================================
 # WRITE GRAPH AND EXECUTE THE WORKFLOW
 # ======================================================================
 # write the graph:
-#bk#clf_pipeline.write_graph(graph2use='colored', simple_form=True)
+#clf_pipeline.write_graph(graph2use='colored', simple_form=True)
 # will execute the workflow using all available cpus:
-MultiImageMaths.help()
 clf_pipeline.run(plugin='MultiProc')

@@ -56,16 +56,6 @@ selectfiles = Node(SelectFiles(templates), name='selectfiles')
 dcm2niix = Node(Dcm2niix(), name='dcm2niix')
 dcm2niix.inputs.out_filename = '%i_%4s_%d'
 print(dcm2niix.inputs.out_filename)
-# ======================================================================
-# DEFINE FSLMATHS NODE
-# ======================================================================
-fslmaths = Node(interface=fsl.MultiImageMaths(),
-                          name='fslmaths', iterfield=['in_file', 'op_string'])
-fslmaths.inputs.in_file = opj(test,'aal_realinterest.nii')
-fslmaths.inputs.op_string = "-bin -add %s" #should eventually be "-bin -mul %s"
-fslmaths.inputs.operand_files = opj(test,'aal_realinterest.nii') #should eventually be: dcm2niix.inputs.out_filename #'%i_%4s_%d'
-fslmaths.inputs.out_file = "nobg_nocerebellum.nii.gz"
-
 
 # ======================================================================
 # DEFINE FREESURFER NODE
@@ -81,6 +71,17 @@ fslmaths.inputs.out_file = "nobg_nocerebellum.nii.gz"
 #fs_recon1.inputs.inputspec.subjects_dir = '.'
 #fs_recon1.inputs.inputspec.T1_files = 'T1.nii.gz'
 #fs_recon1.run()
+
+# ======================================================================
+# DEFINE FSLMATHS NODE
+# ======================================================================
+fslmaths = Node(interface=fsl.MultiImageMaths(),
+                          name='fslmaths', iterfield=['in_file', 'op_string'])
+fslmaths.inputs.in_file = opj(test,'aal_realinterest.nii')
+fslmaths.inputs.op_string = "-bin -add %s" #should eventually be "-bin -mul %s"
+fslmaths.inputs.operand_files = opj(test,'aal_realinterest.nii') #should eventually be: freesurfer.inputs.out_filename #FreeSurfer derived intensity-normalized image
+fslmaths.inputs.out_file = "nobg_nocerebellum.nii.gz"
+
 # ======================================================================
 # CREATE DATASINK NODE (OUTPUT STREAM):
 # ======================================================================

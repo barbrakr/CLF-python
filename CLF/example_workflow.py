@@ -17,6 +17,7 @@ from nipype.workflows.smri.freesurfer.autorecon1 import create_AutoRecon1
 from nipype.interfaces import fsl
 from nipype.interfaces.fsl.maths import MultiImageMaths
 
+
 # ======================================================================
 # DEFINE INPUT: User
 # ======================================================================
@@ -66,17 +67,29 @@ print(dcm2niix.inputs.out_filename)
 # 3. Talairach transform computation
 # 4. Intensity Normalization 1
 # 5. Skull Strip
-#bk#fs_recon1 = create_AutoRecon1()
+#distance = 50
+#fs_recon1 = Node(create_AutoRecon1(), name='fs_recon1')
 #fs_recon1.inputs.inputspec.subject_id = 'subj1'
 #fs_recon1.inputs.inputspec.subjects_dir = '.'
-#fs_recon1.inputs.inputspec.T1_files = 'T1.nii.gz'
+#fs_recon1.inputs.inputspec.T1_files = dcm2niix.inputs.out_filename #'T1.nii.gz'
 #fs_recon1.run()
+
+# =====================================================================
+# DEFINE FSL FAST NODE
+# =====================================================================
+fastr = Node(interface = fsl.FAST(), name = 'fastr')
+fastr.inputs.in_files = '/Users/NEURO-222/Desktop/DCT_anon_dREF059p_27f_lPL2/derivatives/dcm2niix/NOID_0005_Ax_FSPGR_BRAVO_PURE.nii.gz' #"%s" % (dcm2niix.inputs.out_filename) #'aal_realinterest.nii' #Should eventually be 'NOID_0005_Ax_FSPGR_BRAVO_PURE.nii.gz'
+fastr.inputs.out_basename = 'fast_'
+fastr.inputs.verbose = True
+fastr.inputs.probability_maps = True
+fastr.inputs.output_biascorrected = True
+out_basename = fastr.run()
 
 # ======================================================================
 # DEFINE FSLMATHS NODE
 # ======================================================================
-fslmaths = Node(interface=fsl.MultiImageMaths(),
-                          name='fslmaths', iterfield=['in_file', 'op_string'])
+fslmaths = Node(interface = fsl.MultiImageMaths(),
+                          name = 'fslmaths', iterfield = ['in_file', 'op_string'])
 fslmaths.inputs.in_file = opj(test,'aal_realinterest.nii')
 fslmaths.inputs.op_string = "-bin -add %s" #should eventually be "-bin -mul %s"
 fslmaths.inputs.operand_files = opj(test,'aal_realinterest.nii') #should eventually be: freesurfer.inputs.out_filename #FreeSurfer derived intensity-normalized image
@@ -110,6 +123,7 @@ clf_pipeline.connect(infosource, 'subject_id', selectfiles, 'subject_id')
 clf_pipeline.connect(selectfiles, 'dicom', dcm2niix, 'source_dir')
 clf_pipeline.connect(dcm2niix, 'converted_files', datasink, 'dcm2niix.@converted_files')
 clf_pipeline.connect(dcm2niix, 'bids', datasink, 'dcm2niix.@bids')
+clf_pipeline.connect(fastr, 'out_folder', datasink, 'fastr.@output_folder')
 clf_pipeline.connect(fslmaths, 'out_file', datasink, 'fslmaths.@out_files')
 #bk#clf_pipeline.connect(dcm2niix, 'converted_files', fs_recon1, 'inputspec.T1_files')
 #bk#clf_pipeline.connect(fs_recon1, 'out_file', datasink, 'fs_recon1.@out_file')

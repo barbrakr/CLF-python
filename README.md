@@ -25,6 +25,11 @@ Barbara Kreilkamp: @barbrakr
 *SUMMARY*:
 This tool works on structural MRI (T1-weighted MPRAGE or FSPGR) and is designed to identify malformations of cortical development such as focal cortical dysplasia, gliosis or hippocampal sclerosis.
  
+*REQUIREMENTS*:
+pip install nipype==1.4.0
+pip install niflow-nipype1-workflows
+pip install numpy==1.16.1
+[to be confirmed if complete]
 
 *OVERVIEW* of DCT_compile.m script (steps in the pipeline)
 1. load dicoms, and convert dicoms to nifti

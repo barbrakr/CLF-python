@@ -35,7 +35,7 @@ pip install numpy==1.16.1
 
 [to be confirmed if complete]
 
-*START WITH: 
+*START WITH*:
 
 cd CLF-python/CLF
 

@@ -31,6 +31,10 @@ pip install niflow-nipype1-workflows
 pip install numpy==1.16.1
 [to be confirmed if complete]
 
+*START WITH: 
+cd CLF-python/CLF
+python3.7 example_workflow.py
+
 *OVERVIEW* of DCT_compile.m script (steps in the pipeline)
 1. load dicoms, and convert dicoms to nifti
 2. set origin along ac-pc in T1w (probably not necessary to do this explicitly/manually in FSL)

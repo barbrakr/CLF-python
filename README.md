@@ -37,9 +37,7 @@ pip install numpy==1.16.1
 
 *START WITH*:
 
-cd CLF-python/CLF
-
-python3.7 example_workflow.py
+python3.7 CLF-python/CLF/example_workflow.py
 
 *OVERVIEW* of DCT_compile.m script (steps in the pipeline)
 1. load dicoms, and convert dicoms to nifti

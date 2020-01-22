@@ -13,7 +13,7 @@ from nipype.interfaces.utility import Function, IdentityInterface
 from nipype.interfaces.io import SelectFiles, DataSink
 from nipype.pipeline.engine import Workflow, Node, MapNode
 from nipype.interfaces.dcm2nii import Dcm2niix
-from nipype.workflows.smri.freesurfer.autorecon1 import create_AutoRecon1
+from niflow.nipype1.workflows.smri.freesurfer import create_reconall_workflow #from nipype.workflows.smri.freesurfer.autorecon1 import create_AutoRecon1
 from nipype.interfaces import fsl
 from nipype.interfaces.fsl.maths import MultiImageMaths
 

@@ -1,23 +1,32 @@
 # Cortical Lesion Finder
+
+<img src="https://github.com/barbrakr/CLF-python/blob/master/Hackathon_21012020_UoL_bkreilkamp_figure.jpg" width=330 align="right" />
+
 Cortical Lesion Finder is a free and open source voxel-based-morphometry method to identify epileptogenic lesions. This tool works on structural MRI (T1-weighted MPRAGE or FSPGR) and is designed to identify malformations of cortical development such as focal cortical dysplasias, hippocampal sclerosis, amygdala enlargment, encephaloceles and gliosis. 
+
 
 # Disclaimer
 This is work in progress and not meant to be used as a medical tool.
 
+
 # Citation
 Kreilkamp, B.A.K., Das, K., Wieshmann, U.C., Tyler, K., Kiel, S., Gould, S., Marson, A.G., Keller, S.S. (2017) Voxel-based MRI Analysis Can Assist Clinical Diagnostics in Patients with MRI-negative Epilepsy. Organization of Human Brain Mapping, Vancouver, Canada, June 2017. http://tiny.cc/VBM_epilepsy
+
 
 # License
 Copyright © 2019, [Barbara A.K. Kreilkamp](https://orcid.org/0000-0001-6881-5191). This project is licensed under [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause).
 
+
 # Core dependencies
 [Python 3.7](https://www.python.org/downloads/release/python-376/) (other versions of python (>=3.0) should be fine too)
 
-| Package   | Tested version   |
-|------------|-------------------------------|
-| [NumPy](https://numpy.org)        | 1.16.1 |
-| [NiBabel](https://nipy.org/nibabel/)        | 2.4.1 |
-| [NiPype](https://nipype.readthedocs.io/en/latest/)        | 1.4.0 |
+ | Package   | Tested version   |
+ |------------|-------------------------------|
+ | [NumPy](https://numpy.org)        | 1.16.1 |
+ | [NiBabel](https://nipy.org/nibabel/)        | 2.4.1 |
+ | [NiPype](https://nipype.readthedocs.io/en/latest/)        | 1.4.0 |
+ | [niflow-nipype1-workflows](https://pypi.org/project/niflow-nipype1-workflows/)        | 0.0.4 |
+
 
 # Installation
 
@@ -48,6 +57,7 @@ python CLF/example_workflow.py
 python3.7 CLF/example_workflow.py
 ```
 
+
 # Support
 
 Please use [GitHub issues](https://github.com/barbrakr/CLF-python/issues) for questions, bug reports or feature requests.
@@ -68,18 +78,6 @@ Roopa Pai: @roopa-pai
 Carsten Schmidt-Samoa: @carsten.schmidt-samoa
 
 Lennart Wittkuhn: @lnnrtwttkhn
-
-
- 
-# REQUIREMENTS
-
-pip install nipype==1.4.0
-
-pip install niflow-nipype1-workflows
-
-pip install numpy==1.16.1
-
-[to be confirmed if complete]
 
 
 # Workflow
@@ -110,5 +108,8 @@ pip install numpy==1.16.1
 12. for each finding, remove duplicate (summary) file in case summary and non-summary are the same
 13. move newly-created dicom files to subject's results directory (tell clinician results are ready, and where to find them)
 
+# Reference
+Our methods are extended from this publication on the Morphometric Analysis Pipeline (MAP) developed by Huppertz et al. 2005:
 
+Huppertz, H.-J., Grimm, C., Fauser, S., Kassubek, J., Mader, I., Hochmuth, A., Schulze-Bonhage, A. (2005). Enhanced visualization of blurred gray-white matter junctions in focal cortical dysplasia by voxel-based 3D MRI analysis. Epilepsy Research, 67(1-2), 35-50. https://doi.org/10.1016/j.eplepsyres.2005.07.009 
 

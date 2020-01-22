@@ -10,7 +10,6 @@ lxml==4.3.3
 networkx==2.3
 neurdflib==5.0.0.post1
 nibabel==2.4.1
-nipype==1.2.0
 numpy==1.16.4
 packaging==19.0
 prov==1.5.3

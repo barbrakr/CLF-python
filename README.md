@@ -109,7 +109,7 @@ Lennart Wittkuhn: @lnnrtwttkhn
 13. move newly-created dicom files to subject's results directory (tell clinician results are ready, and where to find them)
 
 # Reference
-Our methods are extended from this publication on the Morphometric Analysis Pipeline (MAP) developed by Huppertz et al. 2005:
+This method is extended and modified from this publication on the Morphometric Analysis Pipeline (MAP) developed by Huppertz et al. 2005:
 
 Huppertz, H.-J., Grimm, C., Fauser, S., Kassubek, J., Mader, I., Hochmuth, A., Schulze-Bonhage, A. (2005). Enhanced visualization of blurred gray-white matter junctions in focal cortical dysplasia by voxel-based 3D MRI analysis. Epilepsy Research, 67(1-2), 35-50. https://doi.org/10.1016/j.eplepsyres.2005.07.009 
 

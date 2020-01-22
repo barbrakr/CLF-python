@@ -1,6 +1,7 @@
-# Cortical Lesion Finder
-
 <img src="https://github.com/barbrakr/CLF-python/blob/master/Hackathon_21012020_UoL_bkreilkamp_figure.jpg" width=330 align="right" />
+
+
+# Cortical Lesion Finder
 
 Cortical Lesion Finder is a free and open source voxel-based-morphometry method to identify epileptogenic lesions. This tool works on structural MRI (T1-weighted MPRAGE or FSPGR) and is designed to identify malformations of cortical development such as focal cortical dysplasias, hippocampal sclerosis, amygdala enlargment, encephaloceles and gliosis. 
 

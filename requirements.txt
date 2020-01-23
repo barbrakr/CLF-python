@@ -9,6 +9,7 @@ lxml==4.3.3
 networkx==2.3
 neurdflib==5.0.0.post1
 nibabel==2.4.1
+niflow-nipype1-workflows==0.0.4
 nipype==1.4.0
 numpy==1.16.1
 packaging==19.0

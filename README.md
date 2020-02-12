@@ -86,6 +86,7 @@ Please use [GitHub issues](https://github.com/barbrakr/CLF-python/issues) for qu
 - Samuel Berry: @el-suri
 - Tom Chambers
 - Devin Crowley: @devincrowley
+- Omer Faruk Gulban: @ofgulban
 - Johnny King Lau: @jonkingseestheworld
 - Roopa Pai: @roopa-pai
 - Carsten Schmidt-Samoa: @carsten.schmidt-samoa

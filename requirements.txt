@@ -2,7 +2,7 @@ Click==7.0
 decorator==4.4.0
 dicom2nifti==2.1.5
 funcsigs==1.0.2
-future==0.17.1
+future==0.18.3
 isodate==0.6.0
 kivy>=1.11.0
 lxml==4.3.3
